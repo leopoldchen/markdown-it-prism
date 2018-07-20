@@ -47,8 +47,9 @@ function loadPrismPlugin(name) {
  */
 function highlight(markdownit, text, lang) {
 	const prismLang = loadPrismLang(lang);
-	const code = prismLang ? Prism.highlight(text, prismLang) : markdownit.utils.escapeHtml(text);
+	const code = prismLang ? Prism.highlight(text, prismLang).split('\n').join('<br />') : markdownit.utils.escapeHtml(text);
 	const classAttribute = lang ? ` class="${markdownit.options.langPrefix}${lang}"` : '';
+
 	return `<pre${classAttribute}><code${classAttribute}>${code}</code></pre>`;
 }
 
