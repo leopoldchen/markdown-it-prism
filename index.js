@@ -1,30 +1,10 @@
 import Prism from 'prismjs';
+import loadLanguages from 'prismjs/components/index';
 
 const DEFAULTS = {
 	plugins: [],
 	init: () => {}
 };
-
-
-/**
- * Loads the provided <code>lang</code> into prism.
- *
- * @param <String> lang
- *		Code of the language to load.
- * @return <Object?> The Prism language object for the provided <code>lang</code> code. <code>undefined</code> if the code is not known to Prism.
- */
-function loadPrismLang(lang) {
-	let langObject = Prism.languages[lang];
-	if (langObject === undefined) {
-		try {
-			require('prismjs/components/prism-' + lang);
-			return Prism.languages[lang];
-		} catch (e) {
-			// nothing to do
-		}
-	}
-	return langObject;
-}
 
 function loadPrismPlugin(name) {
 	try {
@@ -46,7 +26,7 @@ function loadPrismPlugin(name) {
  * @return <String> <code>text</code> wrapped in <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code>, both equipped with the appropriate class (markdown-it’s langPrefix + lang). If Prism knows <code>lang</code>, <code>text</code> will be highlighted by it.
  */
 function highlight(markdownit, text, lang) {
-	const prismLang = loadPrismLang(lang);
+	const prismLang = loadLanguages([lang]);
 	const code = prismLang ? Prism.highlight(text, prismLang).split('\n').join('<br />') : markdownit.utils.escapeHtml(text);
 	const classAttribute = lang ? ` class="${markdownit.options.langPrefix}${lang}"` : '';
 

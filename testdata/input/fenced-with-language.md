@@ -2,10 +2,10 @@
 
 This is a fenced code block with language specification:
 
-```java
-public class Foo() {
-	public Foo(bar) {
-		System.out.println(bar);
-	}
-}
+```php
+<?php
+$txt = "Hello world!";
+$x = 5;
+$y = 10.5;
+?>
 ```

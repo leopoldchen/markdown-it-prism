@@ -8,32 +8,16 @@ var _prismjs = require('prismjs');
 
 var _prismjs2 = _interopRequireDefault(_prismjs);
 
+var _index = require('prismjs/components/index');
+
+var _index2 = _interopRequireDefault(_index);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var DEFAULTS = {
 	plugins: [],
 	init: function init() {}
 };
-
-/**
- * Loads the provided <code>lang</code> into prism.
- *
- * @param <String> lang
- *		Code of the language to load.
- * @return <Object?> The Prism language object for the provided <code>lang</code> code. <code>undefined</code> if the code is not known to Prism.
- */
-function loadPrismLang(lang) {
-	var langObject = _prismjs2.default.languages[lang];
-	if (langObject === undefined) {
-		try {
-			require('prismjs/components/prism-' + lang);
-			return _prismjs2.default.languages[lang];
-		} catch (e) {
-			// nothing to do
-		}
-	}
-	return langObject;
-}
 
 function loadPrismPlugin(name) {
 	try {
@@ -55,7 +39,7 @@ function loadPrismPlugin(name) {
  * @return <String> <code>text</code> wrapped in <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code>, both equipped with the appropriate class (markdown-it’s langPrefix + lang). If Prism knows <code>lang</code>, <code>text</code> will be highlighted by it.
  */
 function highlight(markdownit, text, lang) {
-	var prismLang = loadPrismLang(lang);
+	var prismLang = (0, _index2.default)([lang]);
 	var code = prismLang ? _prismjs2.default.highlight(text, prismLang).split('\n').join('<br />') : markdownit.utils.escapeHtml(text);
 	var classAttribute = lang ? ' class="' + markdownit.options.langPrefix + lang + '"' : '';
 
